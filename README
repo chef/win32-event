@@ -2,11 +2,10 @@
    Interface to MS Windows Event objects.
 
 == Prerequsites
-   Requires the win32-ipc package.
+   Requires the win32-ipc library.
    
 == Installation
-   rake test (optional)
-   rake install
+   gem install win32-event
 
 == Synopsis
    Win32::Event.new("Foo") do |event|
@@ -24,8 +23,8 @@
    this file as a gem, then you have the docs.
 
 == Notes
-   The Event class is a subclass of Win32::Ipc (win32-ipc). This package
-   require's the win32-ipc package internally (you don't need to explicitly
+   The Event class is a subclass of Win32::Ipc (win32-ipc). This library
+   require's the win32-ipc library internally (you don't need to explicitly
    call it).
 
    A PulseEvent() wrapper is intentionally omitted.  From the MSDN web site:
@@ -41,11 +40,11 @@
    at http://www.rubyforge.org/projects/win32utils.
 
 == Copyright
-   (C) 2003-2007 Daniel J. Berger
+   (C) 2003-2010 Daniel J. Berger
    All Rights Reserved
 
 == License
-   Ruby's
+   Artistic 2.0
 
 == Author
    Park Heesob
