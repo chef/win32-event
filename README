@@ -1,0 +1,52 @@
+== Description
+   Interface to MS Windows Event objects.
+
+== Prerequsites
+   Requires the win32-ipc package.
+   
+== Installation
+   rake test (optional)
+   rake install
+
+== Synopsis
+   Win32::Event.new("Foo") do |event|
+      event.set
+      # Do stuff
+      event.reset
+   end
+
+   e2 = Win32::Event.open("Bar")
+   # Do stuff
+   e2.close
+
+== Documentation
+   The event.rb file contains inline RDoc documentation. If you installed
+   this file as a gem, then you have the docs.
+
+== Notes
+   The Event class is a subclass of Win32::Ipc (win32-ipc). This package
+   require's the win32-ipc package internally (you don't need to explicitly
+   call it).
+
+   A PulseEvent() wrapper is intentionally omitted.  From the MSDN web site:
+   "This function is unreliable and should not be used. It exists mainly for
+   backward compatibility."
+
+== Acknowledgements
+   The Win32::Event Perl module by Chris Madsen was used as a general
+   guideline for developing the API.
+    
+== Known Bugs
+   None that I'm aware of. Please submit any bug reports to the project page
+   at http://www.rubyforge.org/projects/win32utils.
+
+== Copyright
+   (C) 2003-2007 Daniel J. Berger
+   All Rights Reserved
+
+== License
+   Ruby's
+
+== Author
+   Park Heesob
+   Daniel J. Berger

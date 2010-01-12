@@ -1,0 +1,7 @@
+* CHANGES
+* MANIFEST
+* README
+* Rakefile
+* win32-event.gemspec
+* lib/win32/event.rb
+* test/test_win32_event.rb
