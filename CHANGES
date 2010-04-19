@@ -1,3 +1,7 @@
+== 0.5.2 - ???
+* Updated the gemspec, adding some gem building tasks, and removing the
+  inline gem building code from the gemspec itself.
+
 == 0.5.1 - 6-Aug-2009
 * License changed to Artistic 2.0.
 * Some gemspec updates, including the addition of a license and an update
