@@ -4,6 +4,9 @@
 # Test suite for the win32-event library. This test should be run
 # via the 'rake test' task.
 #####################################################################
+require 'rubygems'
+gem 'test-unit'
+
 require 'test/unit'
 require 'win32/event'
 include Win32
