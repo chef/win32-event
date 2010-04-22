@@ -1,6 +1,8 @@
-== 0.5.2 - ???
-* Updated the gemspec, adding some gem building tasks, and removing the
+== 0.5.2 - 21-Apr-2010
+* Updated the gemspec, adding some gem building tasks, and removed the
   inline gem building code from the gemspec itself.
+* Added test-unit 2 as a development dependency and made some minor
+  updates to the test suite.
 
 == 0.5.1 - 6-Aug-2009
 * License changed to Artistic 2.0.
