@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.rubyforge_project = 'win32utils'
 
   gem.add_dependency('win32-ipc', '>= 0.5.0')
+  gem.add_development_dependency('test-unit', '>= 2.0.7')
 
   gem.description = <<-EOF
     The win32-event library provides an interface to Windows event objects.
