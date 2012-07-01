@@ -7,10 +7,21 @@ module Win32
   class Event < Ipc
     ffi_lib :kernel32
 
+    class SecurityAttributes < FFI::Struct
+      layout(
+        :nLength, :ulong,
+        :lpSecurityDescriptor, :pointer,
+        :bInheritHandle, :bool
+      )
+    end
+
     attach_function :CreateEvent, :CreateEventW, [:pointer, :bool, :bool, :buffer_in], :ulong
     attach_function :OpenEvent, :OpenEventW, [:ulong, :bool, :buffer_in], :ulong
     attach_function :SetEvent, [:ulong], :bool
     attach_function :ResetEvent, [:ulong], :bool
+
+    INVALID_HANDLE_VALUE = 0xFFFFFFFF
+    EVENT_ALL_ACCESS     = 0x1F0003
 
     # This is the error raised if any of the Event methods fail.
     class Error < StandardError; end
@@ -55,31 +66,28 @@ module Win32
     # end of the block.
     #
     def initialize(name=nil, man_reset=false, init_state=false, inherit=true)
-      @name          = name
+      @name          = name ? name.dup : nil
       @manual_reset  = man_reset
       @initial_state = init_state
       @inherit       = inherit
 
-      manual_reset  = man_reset ? 1 : 0
-      initial_state = init_state ? 1 : 0
-
-      # Used to prevent potential segfaults.
-      if name && !name.is_a?(String)
-        raise TypeError, 'name must be a string'
+      if name.is_a?(String) && name.encoding.to_s != 'UTF-16LE'
+        name << 0.chr
+        name.encode!('UTF-16LE')
       end
 
       if inherit
-        sec = 0.chr * 12 # sizeof(SECURITY_ATTRIBUTES)
-        sec[0,4] = [12].pack('L')
-        sec[8,4] = [1].pack('L') # 1 == TRUE
+        sec = SecurityAttributes.new
+        sec[:nLength] = SecurityAttributes.size
+        sec[:bInheritHandle] = inherit
       else
-        sec = 0
+        sec = nil
       end
 
       handle = CreateEvent(sec, manual_reset, initial_state, name)
 
       if handle == 0 || handle == INVALID_HANDLE_VALUE
-        raise Error, get_last_error
+        raise SystemCallError, FFI.errno, "CreateEvent"
       end
 
       super(handle)
@@ -106,22 +114,21 @@ module Win32
     # If you want "open or create" semantics, then use Event.new.
     #
     def self.open(name, inherit=true, &block)
-      if name && !name.is_a?(String)
-        raise TypeError, 'name must be a string'
+      if name.is_a?(String) && name.encoding.to_s != 'UTF-16LE'
+        oname = name << 0.chr
+        oname.encode!('UTF-16LE')
       end
-
-      bool = inherit ? 1 : 0
 
       # This block of code is here strictly to force an error if the user
       # tries to open an event that doesn't already exist.
       begin
-        handle = OpenEvent(EVENT_ALL_ACCESS, bool, name)
+        h = OpenEvent(EVENT_ALL_ACCESS, bool, oname)
 
-        if handle == 0 || handle == INVALID_HANDLE_VALUE
-          raise Error, get_last_error
+        if h == 0 || h == INVALID_HANDLE_VALUE
+          raise SystemCallError, FFI.errno, "OpenEvent"
         end
       ensure
-        CloseHandle(handle) if handle > 0
+        CloseHandle(h) if h
       end
 
       self.new(name, false, false, inherit, &block)
@@ -139,7 +146,7 @@ module Win32
     #
     def reset
       unless ResetEvent(@handle)
-        raise Error, get_last_error
+        raise SystemCallError, FFI.errno, "ResetEvent"
       end
       @signaled = false
     end
@@ -148,7 +155,7 @@ module Win32
     #
     def set
       unless SetEvent(@handle)
-        raise Error, get_last_error
+        raise SystemCallError, FFI.errno, "SetEvent"
       end
       @signaled = true
     end
