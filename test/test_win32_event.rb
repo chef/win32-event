@@ -12,7 +12,7 @@ include Win32
 
 class TC_Win32Event < Test::Unit::TestCase
   def setup
-    @event   = nil
+    @event   = Event.new
     @unicode = "Ηελλας"
     @ascii   = "foo"
   end
@@ -23,6 +23,7 @@ class TC_Win32Event < Test::Unit::TestCase
 
   test "constructor works with no arguments" do
     assert_nothing_raised{ @event = Event.new }
+    assert_nil(@event.name)
   end
 
   test "constructor accepts an event name" do
@@ -80,47 +81,61 @@ class TC_Win32Event < Test::Unit::TestCase
     assert_true(@event4.initial_state)
   end
 
-  def test_manual_reset
-    assert_respond_to(@event1, :manual_reset)
-    assert_nothing_raised{ @event1.manual_reset }
-
-    assert_false(@event1.manual_reset)
-    assert_false(@event2.manual_reset)
-    assert_true(@event3.manual_reset)
-    assert_true(@event4.manual_reset)
-  end
-
-  def test_set
-    assert_respond_to(@event1, :set)
-    assert_nothing_raised{ @event1.set }
-  end
-
-  def test_is_signaled
-    event = Event.new
-    assert_respond_to(event, :signaled?)
-    assert_nothing_raised{ event.signaled? }
-
-    assert_false(event.signaled?)
-    event.set
-    assert_true(event.signaled?)
-    event.reset
-    assert_false(event.signaled?)
-  end
-
-  def test_reset
-    assert_respond_to(@event1, :reset)
-    assert_nothing_raised{ @event1.reset }
-  end
 =end
+  test "manual_reset basic functionality" do
+    assert_respond_to(@event, :manual_reset)
+    assert_nothing_raised{ @event.manual_reset }
+    assert_boolean(@event.manual_reset)
+  end
+
+  test "manual_reset is false by default" do
+    assert_false(@event.manual_reset)
+  end
+
+  test "manual reset matches value passed to constructor" do
+    @event = Event.new(nil, true)
+    assert_true(@event.manual_reset)
+  end
+
+  test "signaled? basic functionality" do
+    assert_respond_to(@event, :signaled?)
+    assert_nothing_raised{ @event.signaled? }
+  end
+
+  test "signaled? returns a boolean" do
+    assert_boolean(@event.signaled?)
+  end
+
+  test "set basic functionality" do
+    @event = Event.new
+    assert_respond_to(@event, :set)
+    assert_nothing_raised{ @event.set }
+  end
+
+  test "set puts event in signaled state" do
+    assert_false(@event.signaled?)
+    @event.set
+    assert_true(@event.signaled?)
+  end
+
+  test "reset basic functionality" do
+    assert_respond_to(@event, :reset)
+    assert_nothing_raised{ @event.reset }
+  end
+
+  test "reset sets signaled state to false" do
+    @event.set
+    assert_true(@event.signaled?)
+    @event.reset
+    assert_false(@event.signaled?)
+  end
 
   test "close method basic functionality" do
-    @event = Event.new
     assert_respond_to(@event, :close)
     assert_nothing_raised{ @event.close }
   end
 
   test "calling close multiple times has no effect" do
-    @event = Event.new
     assert_nothing_raised{ 5.times{ @event.close } }
   end
 
