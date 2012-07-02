@@ -37,10 +37,10 @@
     
 == Known Bugs
   None that I'm aware of. Please submit any bug reports to the project page
-  at http://www.rubyforge.org/projects/win32utils.
+  at https://github.com/djberg96/win32-event.
 
 == Copyright
-  (C) 2003-2010 Daniel J. Berger
+  (C) 2003-2012 Daniel J. Berger
   All Rights Reserved
 
 == License
