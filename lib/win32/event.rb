@@ -20,6 +20,8 @@ module Win32
     attach_function :SetEvent, [:ulong], :bool
     attach_function :ResetEvent, [:ulong], :bool
 
+    private_class_method :CreateEvent, :OpenEvent, :SetEvent, :ResetEvent
+
     INVALID_HANDLE_VALUE = 0xFFFFFFFF
     EVENT_ALL_ACCESS     = 0x1F0003
 

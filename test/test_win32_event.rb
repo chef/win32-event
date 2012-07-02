@@ -46,6 +46,7 @@ class TC_Win32Event < Test::Unit::TestCase
     event = Event.new(@ascii)
     assert_respond_to(Event, :open)
     assert_nothing_raised{ @event = Event.open(@ascii) }
+    assert_equal(@ascii, @event.name)
     event.close
   end
 
@@ -59,6 +60,7 @@ class TC_Win32Event < Test::Unit::TestCase
   test "open method works with unicode names" do
     event = Event.new(@unicode)
     assert_nothing_raised{ @event = Event.open(@unicode) }
+    assert_equal(@unicode, @event.name)
     event.close
   end
 
@@ -181,6 +183,13 @@ class TC_Win32Event < Test::Unit::TestCase
 
   test "calling close multiple times has no effect" do
     assert_nothing_raised{ 5.times{ @event.close } }
+  end
+
+  test "ffi functions are private" do
+    assert_not_respond_to(Event, :CreateEvent)
+    assert_not_respond_to(Event, :OpenEvent)
+    assert_not_respond_to(Event, :SetEvent)
+    assert_not_respond_to(Event, :ResetEvent)
   end
 
   def teardown
