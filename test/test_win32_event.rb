@@ -5,26 +5,35 @@
 # Test suite for the win32-event library. This test should be run
 # via the 'rake test' task.
 #####################################################################
-require 'rubygems'
-gem 'test-unit'
-
+require 'test-unit'
 require 'test/unit'
 require 'win32/event'
 include Win32
 
 class TC_Win32Event < Test::Unit::TestCase
   def setup
-    @event1 = Event.new
-    @event2 = Event.new("Foo")
-    @event3 = Event.new("Bar", true)
-    @event4 = Event.new("Baz", true, true)
-    @uni_event = Event.new("Ηελλας")
+    @event   = nil
+    @unicode = "Ηελλας"
+    @ascii   = "foo"
   end
 
   def test_version
-    assert_equal('0.5.2', Event::VERSION)
+    assert_equal('0.6.0', Event::VERSION)
   end
 
+  test "constructor works with no arguments" do
+    assert_nothing_raised{ @event = Event.new }
+  end
+
+  test "constructor accepts an event name" do
+    assert_nothing_raised{ @event = Event.new(@ascii) }
+  end
+
+  test "constructor accepts a unicode event name" do
+    assert_nothing_raised{ @event = Event.new(@unicode) }
+  end
+
+=begin
   def test_constructor_errors
     assert_raises(ArgumentError){ Event.new("Foo", true, false, true, 1) }
     assert_raises(TypeError){ Event.new(1) }
@@ -102,24 +111,21 @@ class TC_Win32Event < Test::Unit::TestCase
     assert_respond_to(@event1, :reset)
     assert_nothing_raised{ @event1.reset }
   end
+=end
 
-  def test_close
-    event = Event.new
-    assert_respond_to(event, :close)
-    assert_nothing_raised{ event.close }
+  test "close method basic functionality" do
+    @event = Event.new
+    assert_respond_to(@event, :close)
+    assert_nothing_raised{ @event.close }
+  end
+
+  test "calling close multiple times has no effect" do
+    @event = Event.new
+    assert_nothing_raised{ 5.times{ @event.close } }
   end
 
   def teardown
-    @event1.close
-    @event2.close
-    @event3.close
-    @event4.close
-    @uni_event.close
-
-    @event1 = nil
-    @event2 = nil
-    @event3 = nil
-    @event4 = nil
-    @uni_event = nil
+    @event.close if @event
+    @event = nil
   end
 end
