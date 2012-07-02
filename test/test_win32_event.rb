@@ -101,6 +101,16 @@ class TC_Win32Event < Test::Unit::TestCase
     assert_nil(@event.name)
   end
 
+  test "name is set to value specified in constructor" do
+    @event = Event.new(@ascii)
+    assert_equal(@ascii, @event.name)
+  end
+
+  test "name is set to unicode value specified in constructor" do
+    @event = Event.new(@unicode)
+    assert_equal(@unicode, @event.name)
+  end
+
   test "initial_state basic functionality" do
     assert_respond_to(@event, :initial_state)
     assert_nothing_raised{ @event.initial_state }

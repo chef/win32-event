@@ -66,14 +66,18 @@ module Win32
     # end of the block.
     #
     def initialize(name=nil, man_reset=false, init_state=false, inherit=true)
-      @name          = name ? name.dup : nil
+      @name          = name
       @manual_reset  = man_reset
       @initial_state = init_state
       @inherit       = inherit
 
-      if name.is_a?(String) && name.encoding.to_s != 'UTF-16LE'
-        name << 0.chr
-        name.encode!('UTF-16LE')
+      if name.is_a?(String)
+        if name.encoding.to_s != 'UTF-16LE'
+          name = name + 0.chr
+          name.encode!('UTF-16LE')
+        end
+      else
+        raise TypeError if name
       end
 
       if inherit
