@@ -114,15 +114,19 @@ module Win32
     # If you want "open or create" semantics, then use Event.new.
     #
     def self.open(name, inherit=true, &block)
-      if name.is_a?(String) && name.encoding.to_s != 'UTF-16LE'
-        oname = name << 0.chr
+      raise TypeError unless name.is_a?(String)
+
+      if name.encoding.to_s != 'UTF-16LE'
+        oname = name + 0.chr
         oname.encode!('UTF-16LE')
+      else
+        oname = name.dup
       end
 
       # This block of code is here strictly to force an error if the user
       # tries to open an event that doesn't already exist.
       begin
-        h = OpenEvent(EVENT_ALL_ACCESS, bool, oname)
+        h = OpenEvent(EVENT_ALL_ACCESS, inherit, oname)
 
         if h == 0 || h == INVALID_HANDLE_VALUE
           raise SystemCallError, FFI.errno, "OpenEvent"
