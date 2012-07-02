@@ -1,3 +1,8 @@
+== 0.6.0 - 1-Jul-2012
+* Converted code to use FFI.
+* Now requires Ruby 1.9 or later.
+* Updated and refactored tests.
+
 == 0.5.2 - 21-Apr-2010
 * Updated the gemspec, adding some gem building tasks, and removed the
   inline gem building code from the gemspec itself.
