@@ -93,18 +93,10 @@ module Win32
       handle = CreateEvent(sec, manual_reset, initial_state, name)
 
       if handle == 0 || handle == INVALID_HANDLE_VALUE
-        raise SystemCallError, FFI.errno, "CreateEvent"
+        raise SystemCallError.new("CreateEvent", FFI.errno)
       end
 
       super(handle)
-
-      if block_given?
-        begin
-          yield self
-        ensure
-          close
-        end
-      end
     end
 
     # Open an existing Event by +name+. The +inherit+ argument sets whether
@@ -135,7 +127,7 @@ module Win32
         h = OpenEvent(EVENT_ALL_ACCESS, inherit, oname)
 
         if h == 0 || h == INVALID_HANDLE_VALUE
-          raise SystemCallError, FFI.errno, "OpenEvent"
+          raise SystemCallError.new("OpenEvent", FFI.errno)
         end
       ensure
         CloseHandle(h) if h
@@ -156,7 +148,7 @@ module Win32
     #
     def reset
       unless ResetEvent(@handle)
-        raise SystemCallError, FFI.errno, "ResetEvent"
+        raise SystemCallError.new("ResetEvent", FFI.errno)
       end
       @signaled = false
     end
@@ -165,7 +157,7 @@ module Win32
     #
     def set
       unless SetEvent(@handle)
-        raise SystemCallError, FFI.errno, "SetEvent"
+        raise SystemCallError.new("SetEvent", FFI.errno)
       end
       @signaled = true
     end
