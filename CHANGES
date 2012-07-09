@@ -1,4 +1,4 @@
-== 0.6.0 - 1-Jul-2012
+== 0.6.0 - 9-Jul-2012
 * Converted code to use FFI.
 * Now requires Ruby 1.9 or later.
 * Updated and refactored tests.
