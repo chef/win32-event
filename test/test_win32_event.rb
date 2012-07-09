@@ -139,8 +139,9 @@ class TC_Win32Event < Test::Unit::TestCase
   end
 
   test "manual reset matches value passed to constructor" do
-    @event = Event.new(nil, true)
-    assert_true(@event.manual_reset)
+    event = Event.new(nil, true)
+    assert_true(event.manual_reset)
+    event.close
   end
 
   test "signaled? basic functionality" do
