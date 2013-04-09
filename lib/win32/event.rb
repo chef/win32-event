@@ -5,6 +5,9 @@ module Win32
 
   # The Event class encapsulates Windows event objects.
   class Event < Ipc
+    typedef :ulong, :dword
+    typedef :uintptr_t, :handle
+
     ffi_lib :kernel32
 
     class SecurityAttributes < FFI::Struct
@@ -15,10 +18,10 @@ module Win32
       )
     end
 
-    attach_function :CreateEvent, :CreateEventW, [:pointer, :bool, :bool, :buffer_in], :ulong
-    attach_function :OpenEvent, :OpenEventW, [:ulong, :bool, :buffer_in], :ulong
-    attach_function :SetEvent, [:ulong], :bool
-    attach_function :ResetEvent, [:ulong], :bool
+    attach_function :CreateEvent, :CreateEventW, [:pointer, :bool, :bool, :buffer_in], :handle
+    attach_function :OpenEvent, :OpenEventW, [:ulong, :bool, :buffer_in], :handle
+    attach_function :SetEvent, [:handle], :bool
+    attach_function :ResetEvent, [:handle], :bool
 
     private_class_method :CreateEvent, :OpenEvent, :SetEvent, :ResetEvent
 
@@ -29,7 +32,7 @@ module Win32
     class Error < StandardError; end
 
     # The version of the win32-event library
-    VERSION = '0.6.0'
+    VERSION = '0.6.1'
 
     # The name of the Event object. The default is nil
     #
