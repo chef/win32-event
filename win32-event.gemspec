@@ -2,11 +2,11 @@ require 'rubygems'
 
 Gem::Specification.new do |spec|
   spec.name      = 'win32-event'
-  spec.version   = '0.6.0'
+  spec.version   = '0.6.1'
   spec.author    = 'Daniel J. Berger'
   spec.license   = 'Artistic 2.0'
   spec.email     = 'djberg96@gmail.com'
-  spec.homepage  = 'http://www.rubyforge.org/projects/win32utils'
+  spec.homepage  = 'http://github.com/djberg96/win32-event'
   spec.summary   = 'Interface to MS Windows Event objects.'
   spec.test_file = 'test/test_win32_event.rb'
   spec.files     = Dir['**/*'].reject{ |f| f.include?('git') }

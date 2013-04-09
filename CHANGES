@@ -1,3 +1,7 @@
+== 0.6.1 - 9-Apr-2013
+* Fixed the HANDLE datatypes in the underlying FFI code. This addresses
+  an issue for 64 bit versions of Ruby.
+
 == 0.6.0 - 9-Jul-2012
 * Converted code to use FFI.
 * Now requires Ruby 1.9 or later.
