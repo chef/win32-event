@@ -14,12 +14,12 @@ module Win32
       layout(
         :nLength, :ulong,
         :lpSecurityDescriptor, :pointer,
-        :bInheritHandle, :bool
+        :bInheritHandle, :int
       )
     end
 
-    attach_function :CreateEvent, :CreateEventW, [:pointer, :bool, :bool, :buffer_in], :handle
-    attach_function :OpenEvent, :OpenEventW, [:ulong, :bool, :buffer_in], :handle
+    attach_function :CreateEvent, :CreateEventW, [:pointer, :int, :int, :buffer_in], :handle
+    attach_function :OpenEvent, :OpenEventW, [:ulong, :int, :buffer_in], :handle
     attach_function :SetEvent, [:handle], :bool
     attach_function :ResetEvent, [:handle], :bool
 
@@ -32,21 +32,11 @@ module Win32
     class Error < StandardError; end
 
     # The version of the win32-event library
-    VERSION = '0.6.1'
+    VERSION = '0.6.2'
 
     # The name of the Event object. The default is nil
     #
     attr_reader :name
-
-    # Indicates whether or not the Event requires use of the ResetEvent()
-    # function set the state to nonsignaled. The default is false
-    #
-    attr_reader :manual_reset
-
-    # The initial state of the Event object. If true, the initial state
-    # is signaled. Otherwise, it is non-signaled. The default is false.
-    #
-    attr_reader :initial_state
 
     # Creates and returns new Event object.  If +name+ is omitted, the
     # Event object is created without a name, i.e. it's anonymous.
@@ -70,11 +60,11 @@ module Win32
     # In block form this will automatically close the Event object at the
     # end of the block.
     #
-    def initialize(name=nil, man_reset=false, init_state=false, inherit=true)
+    def initialize(name=nil, manual_reset=false, init_state=false, inherit=true)
       @name          = name
-      @manual_reset  = man_reset
-      @initial_state = init_state
-      @inherit       = inherit
+      @manual_reset  = manual_reset ? 1 : 0
+      @initial_state = init_state ? 1 : 0
+      @inherit       = inherit ? 1 : 0
 
       if name.is_a?(String)
         if name.encoding.to_s != 'UTF-16LE'
@@ -88,12 +78,12 @@ module Win32
       if inherit
         sec = SecurityAttributes.new
         sec[:nLength] = SecurityAttributes.size
-        sec[:bInheritHandle] = inherit
+        sec[:bInheritHandle] = @inherit
       else
         sec = nil
       end
 
-      handle = CreateEvent(sec, manual_reset, initial_state, name)
+      handle = CreateEvent(sec, @manual_reset, @initial_state, name)
 
       if handle == 0 || handle == INVALID_HANDLE_VALUE
         raise SystemCallError.new("CreateEvent", FFI.errno)
@@ -117,6 +107,8 @@ module Win32
     def self.open(name, inherit=true, &block)
       raise TypeError unless name.is_a?(String)
 
+      inheritable = inherit ? 1 : 0
+
       if name.encoding.to_s != 'UTF-16LE'
         oname = name + 0.chr
         oname.encode!('UTF-16LE')
@@ -127,7 +119,7 @@ module Win32
       # This block of code is here strictly to force an error if the user
       # tries to open an event that doesn't already exist.
       begin
-        h = OpenEvent(EVENT_ALL_ACCESS, inherit, oname)
+        h = OpenEvent(EVENT_ALL_ACCESS, inheritable, oname)
 
         if h == 0 || h == INVALID_HANDLE_VALUE
           raise SystemCallError.new("OpenEvent", FFI.errno)
@@ -139,12 +131,30 @@ module Win32
       self.new(name, false, false, inherit, &block)
     end
 
+    # Indicates whether or not the Event requires use of the ResetEvent()
+    # function set the state to nonsignaled. The default is false
+    #
+    def manual_reset
+      [1, true].include?(@manual_reset)
+    end
+
+    alias manual_reset? manual_reset
+
+    # The initial state of the Event object. If true, the initial state
+    # is signaled. Otherwise, it is non-signaled. The default is false.
+    #
+    def initial_state
+      [1, true].include?(@initial_state)
+    end
+
+    alias initial_state? initial_state
+
     # Returns whether or not the object was opened such that a process
     # created by the CreateProcess() function (a Windows API function) can
     # inherit the handle. The default is true.
     #
     def inheritable?
-      @inherit
+      [1, true].include?(@inherit)
     end
 
     # Sets the Event object to a non-signaled state.
