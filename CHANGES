@@ -1,3 +1,6 @@
+== 0.6.3 - 25-Oct-2015
+* Added a win32-event.rb file for convenience.
+
 == 0.6.2 - 24-Oct-2015
 * Change most bools to ints. This required explicitly defining some
   attribute reader methods as well.
