@@ -18,7 +18,7 @@ class TC_Win32Event < Test::Unit::TestCase
   end
 
   test "version is set to expected value" do
-    assert_equal('0.6.2', Event::VERSION)
+    assert_equal('0.6.3', Event::VERSION)
   end
 
   test "constructor works with no arguments" do

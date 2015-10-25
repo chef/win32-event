@@ -32,7 +32,7 @@ module Win32
     class Error < StandardError; end
 
     # The version of the win32-event library
-    VERSION = '0.6.2'
+    VERSION = '0.6.3'
 
     # The name of the Event object. The default is nil
     #
