@@ -1,1 +1,1 @@
-require_relative 'win32/event'
+require_relative "win32/event"

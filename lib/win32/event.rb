@@ -1,4 +1,4 @@
-require 'win32/ipc'
+require "win32/ipc"
 
 # The Win32 module serves as a namespace only.
 module Win32
@@ -18,8 +18,8 @@ module Win32
       )
     end
 
-    attach_function :CreateEvent, :CreateEventW, [:pointer, :int, :int, :buffer_in], :handle
-    attach_function :OpenEvent, :OpenEventW, [:ulong, :int, :buffer_in], :handle
+    attach_function :CreateEvent, :CreateEventW, %i{pointer int int buffer_in}, :handle
+    attach_function :OpenEvent, :OpenEventW, %i{ulong int buffer_in}, :handle
     attach_function :SetEvent, [:handle], :bool
     attach_function :ResetEvent, [:handle], :bool
 
@@ -32,7 +32,7 @@ module Win32
     class Error < StandardError; end
 
     # The version of the win32-event library
-    VERSION = '0.6.3'
+    VERSION = "0.6.3".freeze
 
     # The name of the Event object. The default is nil
     #
@@ -60,16 +60,16 @@ module Win32
     # In block form this will automatically close the Event object at the
     # end of the block.
     #
-    def initialize(name=nil, manual_reset=false, init_state=false, inherit=true)
+    def initialize(name = nil, manual_reset = false, init_state = false, inherit = true)
       @name          = name
       @manual_reset  = manual_reset ? 1 : 0
       @initial_state = init_state ? 1 : 0
       @inherit       = inherit ? 1 : 0
 
       if name.is_a?(String)
-        if name.encoding.to_s != 'UTF-16LE'
-          name = name + 0.chr
-          name.encode!('UTF-16LE')
+        if name.encoding.to_s != "UTF-16LE"
+          name += 0.chr
+          name.encode!("UTF-16LE")
         end
       else
         raise TypeError if name
@@ -104,14 +104,14 @@ module Win32
     #
     # If you want "open or create" semantics, then use Event.new.
     #
-    def self.open(name, inherit=true, &block)
+    def self.open(name, inherit = true, &block)
       raise TypeError unless name.is_a?(String)
 
       inheritable = inherit ? 1 : 0
 
-      if name.encoding.to_s != 'UTF-16LE'
+      if name.encoding.to_s != "UTF-16LE"
         oname = name + 0.chr
-        oname.encode!('UTF-16LE')
+        oname.encode!("UTF-16LE")
       else
         oname = name.dup
       end
@@ -128,7 +128,7 @@ module Win32
         CloseHandle(h) if h
       end
 
-      self.new(name, false, false, inherit, &block)
+      new(name, false, false, inherit, &block)
     end
 
     # Indicates whether or not the Event requires use of the ResetEvent()
@@ -163,6 +163,7 @@ module Win32
       unless ResetEvent(@handle)
         raise SystemCallError.new("ResetEvent", FFI.errno)
       end
+
       @signaled = false
     end
 
@@ -172,6 +173,7 @@ module Win32
       unless SetEvent(@handle)
         raise SystemCallError.new("SetEvent", FFI.errno)
       end
+
       @signaled = true
     end
 
