@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name       = "win32-event"
-  spec.version    = "0.6.3"
+  spec.version    = Win32::Event::VERSION
   spec.author     = "Daniel J. Berger"
   spec.license    = "Artistic 2.0"
   spec.email      = "djberg96@gmail.com"
