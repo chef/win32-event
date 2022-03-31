@@ -1,0 +1,52 @@
+---
+expeditor:
+  cached_folders:
+    - vendor
+  defaults:
+    buildkite:
+      retry:
+        automatic:
+          limit: 1
+      timeout_in_minutes: 30
+
+steps:
+
+- label: run-specs-ruby-3.0-linux
+  commands:
+   - .expeditor/run_linux_tests.sh
+
+  expeditor:
+    executor:
+      docker:
+        image: ruby:3.0
+
+- label: run-specs-ruby-3.1-linux
+  commands:
+   - .expeditor/run_linux_tests.sh
+
+  expeditor:
+    executor:
+      docker:
+        image: ruby:3.1
+
+- label: run-specs-ruby-3.0-windows
+  commands:
+   - .expeditor/run_windows_tests.ps1
+
+  expeditor:
+    executor:
+      docker:
+        host_os: windows
+        shell: ["powershell", "-Command"]
+        image: rubydistros/windows-2019:3.0
+
+- label: run-specs-ruby-3.1-windows
+  commands:
+   - .expeditor/run_windows_tests.ps1
+
+  expeditor:
+    executor:
+      docker:
+        host_os: windows
+        shell: ["powershell", "-Command"]
+        image: rubydistros/windows-2019:3.1
