@@ -1,4 +1,6 @@
-
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "win32/event/version"
 
 Gem::Specification.new do |spec|
   spec.name       = "win32-event"
