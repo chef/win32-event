@@ -1,4 +1,4 @@
-
+require_relative "lib/win32/event/version"
 
 Gem::Specification.new do |spec|
   spec.name       = "win32-event"
