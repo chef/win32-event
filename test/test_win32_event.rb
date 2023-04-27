@@ -33,6 +33,19 @@ class TC_Win32Event < Test::Unit::TestCase
     assert_nothing_raised { @event = Event.new(@unicode) }
   end
 
+  test "constructor accepts a block" do
+    assert_nothing_raised {
+      # anonymous event object, with manual-reset, initial state signaled!
+      event = Event.new nil, true, true do |ev|
+        assert_true(ev.signaled?)
+        ev.reset
+        # 'event'/'ev' object has closed automatically
+      end
+      # Errno::ENXIO(<No such device or address - WaitForSingleObject>)
+      assert_raise(Errno::ENXIO) { event.signaled? }
+    }
+  end
+
   test "constructor accepts a maximum of four arguments" do
     assert_raises(ArgumentError) { Event.new("Foo", true, false, true, 1) }
   end
