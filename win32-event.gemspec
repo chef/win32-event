@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.cert_chain = ["certs/djberg96_pub.pem"]
 
   spec.extra_rdoc_files = %w{README CHANGES MANIFEST}
-  spec.required_ruby_version = "> 1.9.0"
+  spec.required_ruby_version = ">= 3.1.6"
 
   spec.add_dependency("win32-ipc", ">= 0.6.0")
   spec.add_development_dependency("test-unit")
