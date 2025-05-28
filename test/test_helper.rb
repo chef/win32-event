@@ -1,0 +1,5 @@
+require "rubygems"
+require "bundler/setup"
+require "test/unit"
+require "win32/ipc"
+require "win32/event"

@@ -3,6 +3,6 @@ require "win32/ipc"
 module Win32
   class Event < Ipc
     # The version of the win32-event library
-    VERSION = "0.6.3".freeze
+    VERSION = "0.7.0".freeze
   end
 end

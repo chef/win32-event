@@ -7,6 +7,7 @@
 require "test-unit"
 require "test/unit"
 require "win32/event"
+require_relative "test_helper"
 include Win32
 
 class TC_Win32Event < Test::Unit::TestCase
@@ -17,7 +18,7 @@ class TC_Win32Event < Test::Unit::TestCase
   end
 
   test "version is set to expected value" do
-    assert_equal("0.6.3", Event::VERSION)
+    assert_equal("0.7.0", Event::VERSION)
   end
 
   test "constructor works with no arguments" do
