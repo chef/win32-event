@@ -1,9 +1,17 @@
 # win32-event Changelog
 
-<!-- latest_release 0.6.3 -->
+<!-- latest_release 0.7.0 -->
+## [win32-event-0.7.0](https://github.com/chef/win32-event/tree/win32-event-0.7.0) (2025-06-06)
+
+#### Merged Pull Requests
+- Updating for Ruby 3.4 and Cookstyle [#9](https://github.com/chef/win32-event/pull/9) ([johnmccrae](https://github.com/johnmccrae))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=0.6.3 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Updating for Ruby 3.4 and Cookstyle [#9](https://github.com/chef/win32-event/pull/9) ([johnmccrae](https://github.com/johnmccrae)) <!-- 0.7.0 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
