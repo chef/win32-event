@@ -31,9 +31,6 @@ module Win32
     # This is the error raised if any of the Event methods fail.
     class Error < StandardError; end
 
-    # The version of the win32-event library
-    VERSION = "0.6.3".freeze
-
     # The name of the Event object. The default is nil
     #
     attr_reader :name
