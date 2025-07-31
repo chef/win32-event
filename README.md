@@ -1,13 +1,14 @@
-== Description
+# Description
   Interface to MS Windows Event objects.
 
-== Prerequsites
+# Prerequsites
   Requires the win32-ipc library.
    
-== Installation
+# Installation
   gem install win32-event
 
-== Synopsis
+# Synopsis
+```ruby
   Win32::Event.new("Foo") do |event|
     event.set
     # Do stuff
@@ -17,12 +18,12 @@
   e2 = Win32::Event.open("Bar")
   # Do stuff
   e2.close
-
-== Documentation
+```
+# Documentation
   The event.rb file contains inline RDoc documentation. If you installed
   this file as a gem, then you have the docs.
 
-== Notes
+# Notes
   The Event class is a subclass of Win32::Ipc (win32-ipc). This library
   require's the win32-ipc library internally (you don't need to explicitly
   call it).
@@ -31,21 +32,21 @@
   "This function is unreliable and should not be used. It exists mainly for
   backward compatibility."
 
-== Acknowledgements
+# Acknowledgements
   The Win32::Event Perl module by Chris Madsen was used as a general
   guideline for developing the API.
     
-== Known Bugs
+# Known Bugs
   None that I'm aware of. Please submit any bug reports to the project page
   at https://github.com/djberg96/win32-event.
 
-== Copyright
+# Copyright
   (C) 2003-2015 Daniel J. Berger
   All Rights Reserved
 
-== License
+# License
   Artistic 2.0
 
-== Author
+# Author
   Park Heesob
   Daniel J. Berger
