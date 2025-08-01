@@ -87,6 +87,14 @@ module Win32
       end
 
       super(handle)
+
+      if block_given?
+        begin
+          yield self
+        ensure
+          close # From superclass
+        end
+      end
     end
 
     # Open an existing Event by +name+. The +inherit+ argument sets whether
