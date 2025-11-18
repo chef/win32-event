@@ -68,6 +68,7 @@ This repository does not currently integrate with Jira or external issue tracker
    - Require user approval with explicit "yes" confirmation
 
 Implementation Plan Template (when applicable):
+
 - **Goal**: Clear objective statement
 - **Impacted Files**: List of files to be modified
 - **Public API Changes**: Any breaking or additive API changes
@@ -98,6 +99,7 @@ Each phase ends with: Step Summary + Checklist + "Continue to next step? (yes/no
 ## Detailed Step Instructions
 
 Principles (MUST follow):
+
 - Smallest cohesive change per commit
 - Add/adjust tests immediately with each behavior change
 - Present mapping of changes to tests before committing
@@ -105,6 +107,7 @@ Principles (MUST follow):
 - Maintain FFI/Fiddle integration integrity
 
 Example Step Output:
+
 ```
 Step: Add boundary guard in event creation
 Summary: Added nil check & size constraint; tests added for empty input & overflow scenarios.
@@ -120,7 +123,8 @@ If user responds other than explicit "yes" → AI MUST pause & clarify.
 
 ## Branching & PR Standards
 
-**Branch Naming** (MUST): 
+**Branch Naming** (MUST):
+
 - With issue: Use EXACT issue key if provided
 - Without issue: kebab-case slug (≤40 chars) derived from task description
 - Examples: `fix-event-memory-leak`, `add-timeout-support`
@@ -128,11 +132,13 @@ If user responds other than explicit "yes" → AI MUST pause & clarify.
 **Branch Scope**: One logical change set per branch (MUST)
 
 **PR Requirements**:
+
 - Remain draft until: tests pass + lint passes + coverage mapping complete
 - Target `main` branch (current release branch)
 - Include platform-specific test validation on Windows
 
 **PR Description Sections** (MUST include, HTML format):
+
 - **Summary**: What and why
 - **Issue**: Link to GitHub issue or external tracker
 - **Changes**: Bulleted list of modifications
@@ -141,6 +147,7 @@ If user responds other than explicit "yes" → AI MUST pause & clarify.
 - **DCO**: Confirmation of Developer Certificate of Origin compliance
 
 **Risk Classification** (MUST select one):
+
 - **Low**: Localized, non-breaking changes
 - **Moderate**: Shared module or light interface changes
 - **High**: Public API changes, performance impacts, security implications, Windows API changes
@@ -150,6 +157,7 @@ If user responds other than explicit "yes" → AI MUST pause & clarify.
 ## Commit & DCO Policy
 
 **Commit Format** (MUST follow):
+
 ```
 {{TYPE}}({{OPTIONAL_SCOPE}}): {{SUBJECT}} ({{ISSUE_KEY}})
 
@@ -162,6 +170,7 @@ Signed-off-by: {{FULL_NAME}} <{{EMAIL}}>
 **Types**: feat, fix, docs, style, refactor, test, chore
 **Scopes**: event, version, test, ci, release
 **Examples**:
+
 - `feat(event): add timeout parameter support (#123)`
 - `fix(test): resolve Windows permission test failures (#124)`
 - `chore(ci): update Windows runner versions (#125)`
@@ -179,6 +188,7 @@ Missing sign-off → AI MUST request user name/email and block commit.
 **Coverage Threshold** (MUST achieve): ≥80% changed lines
 
 **Edge Cases** (MUST enumerate for each plan):
+
 - **Windows Versions**: Compatibility across Windows 2022, Windows 2025
 - **Permissions**: User/admin privilege variations
 - **Concurrency**: Multi-threaded event access
@@ -213,6 +223,7 @@ Missing sign-off → AI MUST request user name/email and block commit.
 ## CI / Release Automation Integration
 
 **GitHub Actions Workflows**:
+
 - **unit.yml**: Unit tests on Windows 2022/2025 with Ruby 3.1/3.4 matrix
   - Triggers: pull_request, push to master
   - Jobs: test execution with bundler cache
@@ -221,12 +232,14 @@ Missing sign-off → AI MUST request user name/email and block commit.
   - Jobs: RuboCop problem matchers integration
 
 **Chef Expeditor Automation**:
+
 - **Release Management**: Automated version bumping, changelog updates, gem building
 - **Version Tagging**: Format `win32-event-{{version}}`
 - **RubyGems Publishing**: Automated publishing to rubygems.org
 - **Slack Notifications**: chef-notify channel for build failures
 
-**Version Bump Mechanism**: 
+**Version Bump Mechanism**:
+
 - Expeditor label-driven (`Expeditor: Bump Version Minor/Major`)
 - Semantic versioning with 0.* constraint on main branch
 - Automated via `.expeditor/update_version.sh`
@@ -236,6 +249,7 @@ Missing sign-off → AI MUST request user name/email and block commit.
 ## Security & Protected Files
 
 **Protected Files** (NEVER edit without explicit approval):
+
 - `certs/djberg96_pub.pem` - Gem signing certificate
 - `.expeditor/config.yml` - Release automation
 - `.github/workflows/*.yml` - CI configuration  
@@ -244,6 +258,7 @@ Missing sign-off → AI MUST request user name/email and block commit.
 - Security or compliance documentation
 
 **Security Constraints** (NEVER):
+
 - Exfiltrate or inject secrets
 - Force-push to default branch
 - Merge PR autonomously
@@ -256,6 +271,7 @@ Missing sign-off → AI MUST request user name/email and block commit.
 ## Prompts Pattern (Interaction Model)
 
 After each step, AI MUST output:
+
 ```
 Step: {{STEP_NAME}}
 Summary: {{CONCISE_OUTCOME}}
@@ -337,12 +353,14 @@ Since no pull request template exists in the repository, use this format:
 ## Idempotency Rules
 
 **Re-entry Detection Order** (MUST check):
+
 1. Branch existence: `git rev-parse --verify {{branch}}`
 2. PR existence: `gh pr list --head {{branch}}`
 3. Uncommitted changes: `git status --porcelain`
 4. Existing Revision History block in this file
 
 **Delta Summary** (MUST document when updating):
+
 - **Added Sections**: {{NEW_SECTIONS}}
 - **Modified Sections**: {{CHANGED_SECTIONS}}  
 - **Deprecated Sections**: {{REMOVED_SECTIONS}}
@@ -400,3 +418,51 @@ gh pr ready {{PR_NUMBER}}  # Mark ready when complete
 bundle exec rake test
 # Expeditor will handle cross-platform validation in CI
 ```
+
+## AI-Assisted Development & Compliance
+
+- ✅ Create PR with `ai-assisted` label (if label doesn't exist, create it with description "Work completed with AI assistance following Progress AI policies" and color "9A4DFF")
+- ✅ Include "This work was completed with AI assistance following Progress AI policies" in PR description
+
+### Jira Ticket Updates (MANDATORY)
+
+- ✅ **IMMEDIATELY after PR creation**: Update Jira ticket custom field `customfield_11170` ("Does this Work Include AI Assisted Code?") to "Yes"
+- ✅ Use atlassian-mcp tools to update the Jira field programmatically
+- ✅ **CRITICAL**: Use correct field format: `{"customfield_11170": {"value": "Yes"}}`
+- ✅ Verify the field update was successful
+
+### Documentation Requirements
+
+- ✅ Reference AI assistance in commit messages where appropriate
+- ✅ Document any AI-generated code patterns or approaches in PR description
+- ✅ Maintain transparency about which parts were AI-assisted vs manual implementation
+
+### Workflow Integration
+
+This AI compliance checklist should be integrated into the main development workflow Step 4 (Pull Request Creation):
+
+```
+Step 4: Pull Request Creation & AI Compliance
+- Step 4.1: Create branch and commit changes WITH SIGNED-OFF COMMITS
+- Step 4.2: Push changes to remote
+- Step 4.3: Create PR with ai-assisted label
+- Step 4.4: IMMEDIATELY update Jira customfield_11170 to "Yes"
+- Step 4.5: Verify both PR labels and Jira field are properly set
+- Step 4.6: Provide complete summary including AI compliance confirmation
+```
+
+- **Never skip Jira field updates** - This is required for Progress AI governance
+- **Always verify updates succeeded** - Check response from atlassian-mcp tools
+- **Treat as atomic operation** - PR creation and Jira updates should happen together
+- **Double-check before final summary** - Confirm all AI compliance items are completed
+
+### Audit Trail
+
+All AI-assisted work must be traceable through:
+
+1. GitHub PR labels (`ai-assisted`)
+2. Jira custom field (`customfield_11170` = "Yes")
+3. PR descriptions mentioning AI assistance
+4. Commit messages where relevant
+
+---
