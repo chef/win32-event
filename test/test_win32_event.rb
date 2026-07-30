@@ -18,7 +18,8 @@ class TC_Win32Event < Test::Unit::TestCase
   end
 
   test "version is set to expected value" do
-    assert_equal("0.7.0", Event::VERSION)
+    expected_version = File.read(File.join(__dir__, "..", "VERSION")).strip
+    assert_equal(expected_version, Event::VERSION)
   end
 
   test "constructor works with no arguments" do

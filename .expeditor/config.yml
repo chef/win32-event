@@ -23,10 +23,12 @@ release_branches:
 changelog:
   rollup_header: Changes not yet released to rubygems.org
 
-pipelines:
-  - verify:
-      description: Pull Request validation tests
-      public: true
+# Windows unit tests were previously duplicated here via Buildkite
+# (.expeditor/verify.pipeline.yml). That pipeline has been removed in
+# favor of the GitHub Actions "unit" workflow (.github/workflows/unit.yml),
+# which covers the same windows-2022/windows-2025 x Ruby 3.1/3.4 matrix.
+# NOTE: branch protection on `main` must be updated to require the GitHub
+# Actions unit test checks instead of "buildkite/chef-win32-event-main-verify".
 
 subscriptions:
   # These actions are taken, in order they are specified, anytime a Pull Request is merged.
