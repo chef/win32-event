@@ -25,7 +25,7 @@ module Win32
 
     private_class_method :CreateEvent, :OpenEvent, :SetEvent, :ResetEvent
 
-    INVALID_HANDLE_VALUE = 0xFFFFFFFF
+    INVALID_HANDLE_VALUE = FFI::Pointer.new(-1).address
     EVENT_ALL_ACCESS     = 0x1F0003
 
     # This is the error raised if any of the Event methods fail.

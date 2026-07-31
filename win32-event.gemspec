@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.author     = "Daniel J. Berger"
   spec.license    = "Artistic 2.0"
   spec.email      = "djberg96@gmail.com"
-  spec.homepage   = "http://github.com/djberg96/win32-event"
+  spec.homepage   = "https://github.com/chef/win32-event"
   spec.summary    = "Interface to MS Windows Event objects."
   spec.test_file  = "test/test_win32_event.rb"
 
