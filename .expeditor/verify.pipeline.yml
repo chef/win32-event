@@ -1,34 +1,26 @@
 ---
+# Windows unit tests previously ran here (duplicating the same
+# windows-2022/windows-2025 x Ruby 3.1/3.4 matrix as the GitHub Actions
+# "unit" workflow in .github/workflows/unit.yml). They have been
+# consolidated into GitHub Actions to remove the duplication.
+#
+# This pipeline is kept as a minimal no-op because Expeditor's Buildkite
+# trigger expects this file to exist (it errors with ENOENT otherwise),
+# and branch protection on `main` still requires the
+# "buildkite/chef-win32-event-main-verify" status check to report.
+#
+# Once branch protection is updated to require "allchecks"
+# (.github/workflows/allchecks.yml) instead, this file and the
+# corresponding buildkite pipeline trigger can be removed entirely.
 expeditor:
-  cached_folders:
-    - vendor
   defaults:
     buildkite:
       retry:
         automatic:
           limit: 1
-      timeout_in_minutes: 30
+      timeout_in_minutes: 5
 
 steps:
 
-- label: run-specs-ruby-3.1-windows
-  commands:
-   - .expeditor/run_windows_tests.ps1
-
-  expeditor:
-    executor:
-      docker:
-        host_os: windows
-        shell: ["powershell", "-Command"]
-        image: rubydistros/windows-2019:3.1
-
-- label: run-specs-ruby-3.4-windows
-  commands:
-   - .expeditor/run_windows_tests.ps1
-
-  expeditor:
-    executor:
-      docker:
-        host_os: windows
-        shell: ["powershell", "-Command"]
-        image: rubydistros/windows-2019:3.4
+- label: ":white_check_mark: verify (no-op, see GitHub Actions unit.yml)"
+  command: echo "Windows unit tests have moved to GitHub Actions (.github/workflows/unit.yml)."
