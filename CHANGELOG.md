@@ -1,16 +1,17 @@
 # win32-event Changelog
 
-<!-- latest_release 0.7.1 -->
-## [win32-event-0.7.1](https://github.com/chef/win32-event/tree/win32-event-0.7.1) (2025-11-18)
+<!-- latest_release 0.8.0 -->
+## [win32-event-0.8.0](https://github.com/chef/win32-event/tree/win32-event-0.8.0) (2026-07-31)
 
 #### Merged Pull Requests
-- set up ai assisted development workflow [#15](https://github.com/chef/win32-event/pull/15) ([rishichawda](https://github.com/rishichawda))
+- Fix INVALID_HANDLE_VALUE to support x64 [#6](https://github.com/chef/win32-event/pull/6) ([ccmywish](https://github.com/ccmywish))
 <!-- latest_release -->
 
 <!-- release_rollup since=0.6.3 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Fix INVALID_HANDLE_VALUE to support x64 [#6](https://github.com/chef/win32-event/pull/6) ([ccmywish](https://github.com/ccmywish)) <!-- 0.8.0 -->
 - set up ai assisted development workflow [#15](https://github.com/chef/win32-event/pull/15) ([rishichawda](https://github.com/rishichawda)) <!-- 0.7.1 -->
 - Updating for Ruby 3.4 and Cookstyle [#9](https://github.com/chef/win32-event/pull/9) ([johnmccrae](https://github.com/johnmccrae)) <!-- 0.7.0 -->
 <!-- release_rollup -->
