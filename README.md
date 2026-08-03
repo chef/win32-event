@@ -50,3 +50,6 @@
 # Author
   Park Heesob
   Daniel J. Berger
+
+# Copyright
+See [COPYRIGHT.md](./COPYRIGHT.md).
