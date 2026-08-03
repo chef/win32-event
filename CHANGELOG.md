@@ -1,16 +1,17 @@
 # win32-event Changelog
 
-<!-- latest_release 0.9.2 -->
-## [win32-event-0.9.2](https://github.com/chef/win32-event/tree/win32-event-0.9.2) (2026-08-01)
+<!-- latest_release 0.9.3 -->
+## [win32-event-0.9.3](https://github.com/chef/win32-event/tree/win32-event-0.9.3) (2026-08-03)
 
 #### Merged Pull Requests
-- CHEF-27678 Update and standardize copyright notices to Progress Software Corporation - copyright_update [#17](https://github.com/chef/win32-event/pull/17) ([clintoncwolfe](https://github.com/clintoncwolfe))
+- CHEF-24916 - Create CONTRIBUTING.md file with standard template for chef [#13](https://github.com/chef/win32-event/pull/13) ([nandanhegde73](https://github.com/nandanhegde73))
 <!-- latest_release -->
 
 <!-- release_rollup since=0.6.3 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- CHEF-24916 - Create CONTRIBUTING.md file with standard template for chef [#13](https://github.com/chef/win32-event/pull/13) ([nandanhegde73](https://github.com/nandanhegde73)) <!-- 0.9.3 -->
 - CHEF-27678 Update and standardize copyright notices to Progress Software Corporation - copyright_update [#17](https://github.com/chef/win32-event/pull/17) ([clintoncwolfe](https://github.com/clintoncwolfe)) <!-- 0.9.2 -->
 - Add GitHub Security Actions Workflow [#11](https://github.com/chef/win32-event/pull/11) ([sean-sype-simmons](https://github.com/sean-sype-simmons)) <!-- 0.9.1 -->
 - Support `Event.new` with a block [#7](https://github.com/chef/win32-event/pull/7) ([ccmywish](https://github.com/ccmywish)) <!-- 0.9.0 -->
