@@ -1,16 +1,17 @@
 # win32-event Changelog
 
-<!-- latest_release 0.9.3 -->
-## [win32-event-0.9.3](https://github.com/chef/win32-event/tree/win32-event-0.9.3) (2026-08-03)
+<!-- latest_release 0.9.4 -->
+## [win32-event-0.9.4](https://github.com/chef/win32-event/tree/win32-event-0.9.4) (2026-08-07)
 
 #### Merged Pull Requests
-- CHEF-24916 - Create CONTRIBUTING.md file with standard template for chef [#13](https://github.com/chef/win32-event/pull/13) ([nandanhegde73](https://github.com/nandanhegde73))
+- Add DCO check workflow [#22](https://github.com/chef/win32-event/pull/22) ([tpowell-progress](https://github.com/tpowell-progress))
 <!-- latest_release -->
 
 <!-- release_rollup since=0.6.3 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- Add DCO check workflow [#22](https://github.com/chef/win32-event/pull/22) ([tpowell-progress](https://github.com/tpowell-progress)) <!-- 0.9.4 -->
 - CHEF-24916 - Create CONTRIBUTING.md file with standard template for chef [#13](https://github.com/chef/win32-event/pull/13) ([nandanhegde73](https://github.com/nandanhegde73)) <!-- 0.9.3 -->
 - CHEF-27678 Update and standardize copyright notices to Progress Software Corporation - copyright_update [#17](https://github.com/chef/win32-event/pull/17) ([clintoncwolfe](https://github.com/clintoncwolfe)) <!-- 0.9.2 -->
 - Add GitHub Security Actions Workflow [#11](https://github.com/chef/win32-event/pull/11) ([sean-sype-simmons](https://github.com/sean-sype-simmons)) <!-- 0.9.1 -->
